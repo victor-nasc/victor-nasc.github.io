@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta de Trabalho de Conclusão de Curso - Victor Nascimento Ribeiro</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #f4f4f4;
+            font-size: 19px; /* Efeito de Zoom */
+        }
+        .paper-container {
+            background-color: white;
+            padding: 70px 90px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .institution {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            font-size: 1.1em;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin: 40px 0;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        .title-research {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 25px 0;
+            display: block;
+            color: #000;
+        }
+        .authors {
+            margin-top: 40px;
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+        h2 {
+            font-size: 1.3em;
+            margin-top: 45px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1.15em;
+            margin-top: 30px;
+        }
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        ul, ol {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .reference-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .reference-list li {
+            margin-bottom: 12px;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="paper-container">
+    <header>
+        <div class="institution">
+            Instituto de Matemática e Estatística - IME<br>
+            Universidade de São Paulo - USP
+        </div>
+        <h1>Proposta de Trabalho de Conclusão de Curso</h1>
+        <span class="title-research">Quantificação de Incerteza na Segmentação de Queimadas em Imagens Multiespectrais de Sensoriamento Remoto</span>
+        
+        <div class="authors">
+            <strong>Victor Nascimento Ribeiro</strong><br>
+            Orientador: Nina Sumiko Tomita Hirata<br>
+            Coorientador: Adèle Helena Ribeiro
+        </div>
+    </header>
+
+    <section>
+        <h2>1. Introdução</h2>
+        <p>
+            Modelos de deep learning têm alcançado bom desempenho em tarefas de segmentação semântica de imagens de sensoriamento remoto (SR), viabilizando aplicações como mapeamento de queimadas e uso e cobertura do solo, detecção de mudanças, monitoramento de plantações. No entanto, a grande maioria dos modelos produz um único mapa de segmentação determinístico, sem qualquer indicação de onde ou por que o modelo pode estar errado.
+        </p>
+        <p>
+            O problema é especialmente crítico em imagens de sensoriamento remoto que apresentam fontes de incerteza complexas: variabilidade sazonal e geográfica, ruído de sensor, e múltiplas bandas espectrais. Ignorar essas incertezas pode levar a decisões equivocadas em aplicações de alto impacto como planejamento urbano e políticas ambientais.
+        </p>
+        <p>
+            A quantificação de incerteza (UQ: Uncertainty Quantification) em redes neurais é um campo ativo de pesquisa e oferece ferramentas para que modelos expressem suas limitações de forma quantificada. Na literatura, as incertezas preditivas são geralmente decompostas em dois tipos fundamentais [1]:
+        </p>
+        <ul>
+            <li><strong>Incerteza Aleatória (AU):</strong> inerente aos dados, decorrente de ruído intrínseco, ambiguidade de fronteira e variabilidade de anotação. Não pode ser reduzida com mais dados.</li>
+            <li><strong>Incerteza Epistêmica (EU):</strong> relacionada ao desconhecimento do modelo, causada por escassez de dados de treinamento ou por amostras fora da distribuição (out-of-distribution). Pode ser reduzida com mais dados representativos.</li>
+        </ul>
+        <p>
+            Apesar do crescente interesse em UQ na área de visão computacional, uma lacuna importante persiste: a avaliação sistemática e comparativa de métodos de UQ para segmentação semântica no domínio de sensoriamento remoto ainda é escassa, conforme apontado por Rey et al. (2025) [2].
+        </p>
+        <p>
+            No contexto específico da segmentação de queimadas, o trabalho de Chakravarty (2025) [3] apresenta a primeira análise sistemática de previsão de propagação de incêndios florestais. No entanto, trata-se de um estudo preliminar, com escopo metodológico limitado e avaliação restrita em termos de métricas e cenários experimentais, o que reforça a necessidade de investigações mais abrangentes nesse domínio.
+        </p>
+        <p>
+            Mais recentemente, Christensen et al. (2026) [4] realizaram uma comparação direta e sistemática entre diversos métodos de quantificação de incerteza utilizando imagens médicas, avaliando não apenas a acurácia de segmentação, mas também a qualidade das estimativas de incerteza e sua calibração. Dessa forma, este trabalho propõe um estudo comparativo entre abordagens de UQ aplicadas à segmentação de queimadas em imagens multiespectrais de sensoriamento remoto. O objetivo é implementar e avaliar diferentes métodos em benchmarks públicos, comparando-os em termos de acurácia de segmentação, calibração, qualidade das estimativas de incerteza e eficiência computacional.
+        </p>
+    </section>
+
+    <section>
+        <h2>2. Metodologia</h2>
+        <h3>2.1 Métodos a Comparar</h3>
+        <p>Esse trabalho tem como objetivo implementar e avaliar alguns dos seguintes métodos:</p>
+        <ol>
+            <li><strong>Baseline Determinístico:</strong> Segmentação sem quantificar incerteza.</li>
+            <li><strong>Para a incerteza epistêmica:</strong>
+                <ul>
+                    <li>Monte Carlo Dropout (MC Dropout): mantém o dropout ativo na inferência, realizando múltiplos forward passes estocásticos para aproximar a distribuição posterior dos parâmetros [5].</li>
+                    <li>Deep Ensembles: treina múltiplos modelos com inicializações aleatórias distintas e agrega suas predições [6].</li>
+                    <li>Test-Time Augmentation (TTA): aplica transformações aleatórias à entrada em tempo de inferência e agrega os resultados.</li>
+                </ul>
+            </li>
+            <li><strong>Para a incerteza aleatória:</strong>
+                <ul>
+                    <li>Probabilistic U-Net: combina uma U-Net com um Variational Autoencoder (VAE) para amostrar múltiplas segmentações plausíveis, capturando a distribuição sobre possíveis predições [7].</li>
+                    <li>Stochastic Segmentation Networks (SSN): modela diretamente a distribuição de probabilidade sobre máscaras de segmentação no espaço de logits, capturando correlações espaciais [8].</li>
+                    <li>Modelos de Difusão (DDPM): modelos generativos que aprendem a distribuição de segmentações plausíveis por meio de um processo iterativo de denoising [9].</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>2.2 Datasets</h3>
+        <p>Serão utilizados dois conjuntos de dados públicos:</p>
+        <ul>
+            <li><strong>CaBuAr (Califórnia Burned Areas):</strong> dataset focado na delimitação de cicatrizes de incêndios florestais na Califórnia (2015-2022). Contém 340 aquisições de incêndios, totalizando 1.047 patches de 512x512 pixels com 12 bandas espectrais e resolução de 20 m, obtidas do satélite Sentinel-2 L2A. Ele disponibiliza pares de imagens pré e pós-fogo [10].</li>
+            <li>No futuro outro dataset será utilizado para avaliar a performance quando há variação geográfica/sazonal.</li>
+        </ul>
+
+        <h3>2.3 Experimentos</h3>
+        <p>
+            Cada método será avaliado em três eixos: qualidade de segmentação, qualidade das estimativas de incerteza e eficiência computacional. As métricas específicas para cada eixo serão definidas no decorrer do projeto.
+        </p>
+    </section>
+
+    <section>
+        <h2>3. Plano de Atividades</h2>
+        <p>O trabalho será desenvolvido ao longo dos dois semestres de 2026, conforme o cronograma de atividades a seguir:</p>
+        <ol>
+            <li>Revisão aprofundada da literatura sobre UQ em segmentação de imagens [Meses 1-2]</li>
+            <li>Configuração do ambiente experimental: download e pré-processamento do dataset e implementação do pipeline base de segmentação sem UQ [Meses 2-3]</li>
+            <li>Implementação e validação dos métodos de EU: MC Dropout, Deep Ensembles, TTA. Validação com baseline determinístico [Meses 3-4]</li>
+            <li>Implementação e validação dos métodos de AU: Probabilistic U-Net, SSN e modelo de difusão condicional [Meses 3-6]</li>
+            <li>Execução dos experimentos comparativos: definir e implementar as métricas e o protocolo de avaliação dos métodos [Meses 4-6]</li>
+            <li>Análise quantitativa/qualitativa dos resultados e mapas de incerteza [Meses 6-7]</li>
+            <li>Escrita da monografia e organização do código desenvolvido com scripts para reprodução [Meses 6-8]</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Referências</h2>
+        <ul class="reference-list">
+            <li>[1] Kendall, A., Gal, Y. What Uncertainties Do We Need in Bayesian Deep Learning for Computer Vision? NeurIPS, 2017.</li>
+            <li>[2] Rey, M. et al. Uncertainty Evaluation of Segmentation Models for Earth Observation. arXiv:2510.19586, 2025.</li>
+            <li>[3] Chakravarty, A. Spatial uncertainty quantification in wildfire forecasting for climate-resilient emergency planning. NeurIPS, 2025.</li>
+            <li>[4] Christensen, J. et al. Rethinking Uncertainty Quantification and Entanglement in Image Segmentation. arXiv:2603.18792, 2026.</li>
+            <li>[5] Gal, Y., Ghahramani, Z. Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning. ICML, 2016.</li>
+            <li>[6] Lakshminarayanan, B., Pritzel, A., Blundell, C. Simple and Scalable Predictive Uncertainty Estimation Using Deep Ensembles. NeurIPS, 2017.</li>
+            <li>[7] Kohl, S. et al. A Probabilistic U-Net for Segmentation of Ambiguous Images. NeurIPS, 2018.</li>
+            <li>[8] Monteiro, M. et al. Stochastic Segmentation Networks: Modelling Spatially Correlated Aleatoric Uncertainty. NeurIPS, 2020.</li>
+            <li>[9] Rahman, A. et al. Ambiguous Medical Image Segmentation Using Diffusion Models. CVPR, 2023.</li>
+        </ul>
+    </section>
+</div>
+
+</body>
+</html>
