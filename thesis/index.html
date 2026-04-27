@@ -118,7 +118,7 @@
             Apesar do crescente interesse em UQ na área de visão computacional, uma lacuna importante persiste: a avaliação sistemática e comparativa de métodos de UQ para segmentação semântica no domínio de sensoriamento remoto ainda é escassa, conforme apontado por Rey et al. (2025) [2].
         </p>
         <p>
-            No contexto específico da segmentação de queimadas, o trabalho de Chakravarty (2025) [3] apresenta a primeira análise sistemática de previsão de propagação de incêndios florestais. No entanto, trata-se de um estudo preliminar, com escopo metodológico limitado e avaliação restrita em termos de métricas e cenários experimentais, o que reforça a necessidade de investigações mais abrangentes nesse domínio.
+            No contexto específico da segmentação de queimadas, o trabalho de Chakravarty (2025) [3] apresenta a primeira análise sistemática de previsão de propagação de incêndios florestais. No entanto, trata-se de um estudo preliminar, com escopo metodológico limitado e avaliação restrita em termos de métricas e cenários experimentais. Além disso, até onde foi possível verificar na literatura recente, não foram encontrados trabalhos que abordem especificamente a predição de cicatrizes de queimadas, o que reforça a necessidade de investigações mais abrangentes nesse domínio.
         </p>
         <p>
             Mais recentemente, Christensen et al. (2026) [4] realizaram uma comparação direta e sistemática entre diversos métodos de quantificação de incerteza utilizando imagens médicas, avaliando não apenas a acurácia de segmentação, mas também a qualidade das estimativas de incerteza e sua calibração. Dessa forma, este trabalho propõe um estudo comparativo entre abordagens de UQ aplicadas à segmentação de queimadas em imagens multiespectrais de sensoriamento remoto. O objetivo é implementar e avaliar diferentes métodos em benchmarks públicos, comparando-os em termos de acurácia de segmentação, calibração, qualidade das estimativas de incerteza e eficiência computacional.
@@ -150,8 +150,8 @@
         <h3>2.2 Datasets</h3>
         <p>Serão utilizados dois conjuntos de dados públicos:</p>
         <ul>
-            <li><strong>CaBuAr (Califórnia Burned Areas):</strong> dataset focado na delimitação de cicatrizes de incêndios florestais na Califórnia (2015-2022). Contém 340 aquisições de incêndios, totalizando 1.047 patches de 512x512 pixels com 12 bandas espectrais e resolução de 20 m, obtidas do satélite Sentinel-2 L2A. Ele disponibiliza pares de imagens pré e pós-fogo [10].</li>
-            <li>No futuro outro dataset será utilizado para avaliar a performance quando há variação geográfica/sazonal.</li>
+            <li><strong>FLOGA (Forest wiLdfire Observations for the Greek Area)</strong> [10]: É um dataset focado na delimitação de cicatrizes de incêndios florestais florestais na Grécia (2017–2021). Contém 326 eventos de incêndio, com imagens de resolução de 10 m obtidas do satélite Sentinel-2 L2A recortadas em patches de 256x256 pixels. Ele disponibiliza pares de imagens pré e pós-fogo para todos os eventos. Os rótulos de área queimada foram anotados manualmente por especialistas do Serviço de Bombeiros Helênico.</li>
+            <li>No futuro outro dataset será utilizado para avaliar a performance quando há variação geográfica/sazonal. Alguns candidatos são: CaBuAr ou Sen2Fire.</li>
         </ul>
 
         <h3>2.3 Experimentos</h3>
@@ -186,6 +186,7 @@
             <li>[7] Kohl, S. et al. A Probabilistic U-Net for Segmentation of Ambiguous Images. NeurIPS, 2018.</li>
             <li>[8] Monteiro, M. et al. Stochastic Segmentation Networks: Modelling Spatially Correlated Aleatoric Uncertainty. NeurIPS, 2020.</li>
             <li>[9] Rahman, A. et al. Ambiguous Medical Image Segmentation Using Diffusion Models. CVPR, 2023.</li>
+            <li>[10] Sdraka, M. et al. FLOGA: A machine learning ready dataset, a benchmark and a novel deep learning model for burnt area mapping with Sentinel-2. IEEE JSTARS (Journal of Selected Topics in Applied Earth Observations and Remote Sensing), 2024.</li>
         </ul>
     </section>
 </div>
