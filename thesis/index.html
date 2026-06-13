@@ -90,7 +90,7 @@
             Universidade de São Paulo - USP
         </div>
         <h1>Proposta de Trabalho de Conclusão de Curso</h1>
-        <span class="title-research">Quantificação de Incerteza na Segmentação de Queimadas em Imagens Multiespectrais de Sensoriamento Remoto</span>
+        <span class="title-research">Quantificação de Incerteza na Previsão de Propagação de Incêndios Florestais a partir de Séries Temporais Multiespectrais</span>
         
         <div class="authors">
             <strong>Victor Nascimento Ribeiro</strong><br>
@@ -102,10 +102,10 @@
     <section>
         <h2>1. Introdução</h2>
         <p>
-            Modelos de deep learning têm alcançado bom desempenho em tarefas de segmentação semântica de imagens de sensoriamento remoto (SR), viabilizando aplicações como mapeamento de queimadas e uso e cobertura do solo, detecção de mudanças, monitoramento de plantações. No entanto, a grande maioria dos modelos produz um único mapa de segmentação determinístico, sem qualquer indicação de onde ou por que o modelo pode estar errado.
+            Modelos de deep learning têm alcançado bom desempenho em tarefas de previsão de propagação de incêndios florestais a partir de séries temporais multiespectrais de sensoriamento remoto, aprendendo diretamente a partir de dados históricos de fogo ativo, meteorologia e topografia. A tarefa é formulada como segmentação semântica binária: dado um conjunto de observações diárias de um incêndio ativo, o modelo prevê o mapa binário de fogo ativo do dia seguinte. No entanto, a grande maioria dos modelos produz um único mapa de segmentação determinístico, sem qualquer indicação de onde ou por que o modelo pode estar errado.
         </p>
         <p>
-            O problema é especialmente crítico em imagens de sensoriamento remoto que apresentam fontes de incerteza complexas: variabilidade sazonal e geográfica, ruído de sensor, e múltiplas bandas espectrais. Ignorar essas incertezas pode levar a decisões equivocadas em aplicações de alto impacto como planejamento urbano e políticas ambientais.
+            O problema é especialmente crítico neste domínio, que apresenta fontes de incerteza complexas: rótulos ruidosos gerados automaticamente pelo produto VIIRS de fogo ativo (afetados por cobertura de nuvens e fumaça), classes extremamente desbalanceadas (~0,1% dos pixels representam fogo ativo) e estocásticidade física inerente à propagação do fogo. Ignorar essas incertezas pode levar a decisões equivocadas em situações de alto impacto como planejamento de evacuações e alocação de recursos de combate a incêndios.
         </p>
         <p>
             A quantificação de incerteza (UQ: Uncertainty Quantification) em redes neurais é um campo ativo de pesquisa e oferece ferramentas para que modelos expressem suas limitações de forma quantificada. Na literatura, as incertezas preditivas são geralmente decompostas em dois tipos fundamentais [1]:
@@ -118,10 +118,10 @@
             Apesar do crescente interesse em UQ na área de visão computacional, uma lacuna importante persiste: a avaliação sistemática e comparativa de métodos de UQ para segmentação semântica no domínio de sensoriamento remoto ainda é escassa, conforme apontado por Rey et al. (2025) [2].
         </p>
         <p>
-            No contexto específico da segmentação de queimadas, o trabalho de Chakravarty (2025) [3] apresenta a primeira análise sistemática de previsão de propagação de incêndios florestais. No entanto, trata-se de um estudo preliminar, com escopo metodológico limitado e avaliação restrita em termos de métricas e cenários experimentais. Além disso, até onde foi possível verificar na literatura recente, não foram encontrados trabalhos que abordem especificamente a predição de cicatrizes de queimadas, o que reforça a necessidade de investigações mais abrangentes nesse domínio.
+            No contexto específico de previsão de propagação de incêndios, o trabalho de Chakravarty (2025) [3] apresenta a primeira análise sistemática de incerteza espacial nessa tarefa. No entanto, trata-se de um estudo preliminar, com escopo metodológico pequeno e avaliação restrita em termos de métricas e cenários experimentais, o que reforça a necessidade de investigações mais abrangentes nesse domínio.
         </p>
         <p>
-            Mais recentemente, Christensen et al. (2026) [4] realizaram uma comparação direta e sistemática entre diversos métodos de quantificação de incerteza utilizando imagens médicas, avaliando não apenas a acurácia de segmentação, mas também a qualidade das estimativas de incerteza e sua calibração. Dessa forma, este trabalho propõe um estudo comparativo entre abordagens de UQ aplicadas à segmentação de queimadas em imagens multiespectrais de sensoriamento remoto. O objetivo é implementar e avaliar diferentes métodos em benchmarks públicos, comparando-os em termos de acurácia de segmentação, calibração, qualidade das estimativas de incerteza e eficiência computacional.
+            Mais recentemente, Christensen et al. (2026) [4] realizaram uma comparação direta e sistemática entre diversos métodos de quantificação de incerteza utilizando imagens médicas, avaliando não apenas a acurácia de segmentação, mas também a qualidade das estimativas de incerteza e sua calibração. Dessa forma, este trabalho propõe um estudo comparativo entre abordagens de UQ aplicadas à previsão de propagação de incêndios florestais a partir de séries temporais multiespectrais. O objetivo é implementar e avaliar diferentes métodos sobre o dataset WildfireSpreadTS [10], comparando-os em termos de acurácia de segmentação, calibração, qualidade das estimativas de incerteza e eficiência computacional.
         </p>
     </section>
 
@@ -147,12 +147,8 @@
             </li>
         </ol>
 
-        <h3>2.2 Datasets</h3>
-        <p>Serão utilizados dois conjuntos de dados públicos:</p>
-        <ul>
-            <li><strong>FLOGA (Forest wiLdfire Observations for the Greek Area)</strong> [10]: É um dataset focado na delimitação de cicatrizes de incêndios florestais florestais na Grécia (2017–2021). Contém 326 eventos de incêndio, com imagens de resolução de 10 m obtidas do satélite Sentinel-2 L2A recortadas em patches de 256x256 pixels. Ele disponibiliza pares de imagens pré e pós-fogo para todos os eventos. Os rótulos de área queimada foram anotados manualmente por especialistas do Serviço de Bombeiros Helênico.</li>
-            <li>No futuro outro dataset será utilizado para avaliar a performance quando há variação geográfica/sazonal. Alguns candidatos são: CaBuAr ou Sen2Fire.</li>
-        </ul>
+        <h3>2.2 Dataset</h3>
+        <p>Será utilizado o dataset público <strong>WildfireSpreadTS</strong> [10]: 607 eventos de incêndio nos Estados Unidos (2018–2021), totalizando 13.607 imagens diárias a 375 m de resolução espacial. Cada amostra consiste em uma janela temporal de até 5 dias de observações com 23 canais multimodais (bandas espectrais VIIRS, índices de vegetação NDVI/EVI2, dados meteorológicos, topografia e cobertura do solo), e o alvo é o mapa binário de fogo ativo do dia seguinte. A avaliação é feita com validação cruzada de 12 folds por ano.</p>
 
         <h3>2.3 Experimentos</h3>
         <p>
@@ -186,7 +182,7 @@
             <li>[7] Kohl, S. et al. A Probabilistic U-Net for Segmentation of Ambiguous Images. NeurIPS, 2018.</li>
             <li>[8] Monteiro, M. et al. Stochastic Segmentation Networks: Modelling Spatially Correlated Aleatoric Uncertainty. NeurIPS, 2020.</li>
             <li>[9] Rahman, A. et al. Ambiguous Medical Image Segmentation Using Diffusion Models. CVPR, 2023.</li>
-            <li>[10] Sdraka, M. et al. FLOGA: A machine learning ready dataset, a benchmark and a novel deep learning model for burnt area mapping with Sentinel-2. IEEE JSTARS (Journal of Selected Topics in Applied Earth Observations and Remote Sensing), 2024.</li>
+            <li>[10] Gerard, S. et al. WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction. NeurIPS Datasets and Benchmarks Track, 2023.</li>
         </ul>
     </section>
 </div>
